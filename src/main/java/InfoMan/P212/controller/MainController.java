@@ -85,18 +85,18 @@ public class MainController {
     }
     public void loadStudents() throws SQLException{
         studentList.clear();
-        String sql = "SELECT * from students";
+        String sql = "SELECT * from student";
         
         Statement pstmt  = db.getConnection().createStatement();
         ResultSet result = pstmt.executeQuery(sql);
 
         while(result.next()){
             Student student = new Student(result.getInt("id"),
-                    result.getString("first_name"),
-                    result.getString("middle_name"),
-                    result.getString("last_name"),
+                    result.getString("firstName"),
+                    result.getString("middleName"),
+                    result.getString("lastName"),
                     result.getString("address"),
-                    result.getString("phone_number"),
+                    result.getString("phoneNumber"),
                     result.getString("email"),
                     result.getString("gender"));
             studentList.add(student);
@@ -109,7 +109,7 @@ public class MainController {
     @FXML
     private void save() throws SQLException {
         if (!isEditing) {
-            String sql = "INSERT INTO students(first_name, middle_name, last_name, address, phone_number, email, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO student(firstName, middleName, lastName, address, phoneNumber, email, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = db.getConnection().prepareStatement(sql);
             pstmt.setString(1, firstName.getText());
             pstmt.setString(2, middleName.getText());
@@ -132,7 +132,7 @@ public class MainController {
                 loadStudents();
             }
         } else{
-            String sql = "UPDATE students SET first_name = ?, middle_name = ?, last_name = ?, address = ?, phone_number = ?, email = ?, gender = ? WHERE id = ?";
+            String sql = "UPDATE student SET firstName = ?, middleName = ?, lastName = ?, address = ?, phoneNumber = ?, email = ?, gender = ? WHERE id = ?";
             try{
                 PreparedStatement pstmt = db.getConnection().prepareStatement(sql);
                 pstmt.setString(1, firstName.getText());
